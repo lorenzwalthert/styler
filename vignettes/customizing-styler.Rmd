@@ -1,0 +1,137 @@
+---
+title: "Customizing styler"
+author: "Lorenz Walthert"
+date: "8/10/2017"
+output: html_document
+---
+
+This vignette gives a high-level overview about how styler works and how you
+can define your own style guide and format code according to it. 
+
+# How styler works
+
+There are three major steps that styler performs in order to style code:
+
+1. Create a abstract syntax tree (AST) from `utils::getParseData()` that
+   contains positional information of every token. We call
+   this a nested parse table. You can learn more about how that is done
+   exactly in the vignettes "Data Structures" and "Manipulating the nested 
+   parse table".
+2. Apply transformer functions at each level of the nested parse table. In 
+   particular, we create two columns `lag_newlines` and `spaces`, which contain
+   the number of line breaks before the token and the number of spaces 
+   after the token. These will be the columns that most of our transformer 
+   functions will modify. To go through the whole nested structure and apply
+   the transformer functions repeatedly on every level of nesting, we use
+   a visitor approach, i.e. a function that takes functions as arguments and
+   applies them to every level of nesting. 
+3. Serialize the nested parse table, that is, extract the terminal tokens from 
+   the nested parse table and add spaces and line breaks between them as 
+   specified in the nested parse table. 
+
+The argument transformers is, apart from the code to style, the key argument 
+of functinos such as `style_text()` and friends. The transformers are a named
+list of transformer functions and other arguments passed to styler. To use the
+default style guide of styler (the tidyverse style guide), call
+`get_transformers()` to get the list of the transformer functions. Let's quickly
+look at what those are.
+```{r}
+library("styler")
+library("dplyr")
+names(get_transformers())
+str(get_transformers(), max.level = 2, give.attr = FALSE)
+```
+
+We note that there are different types of transformer functions. `filler` is
+enriching the parse table (so it is not acually a transformer), the other 
+elements modify either spacing, line break or tokens. `use_raw_indention` is 
+not a function, it is just an option.
+All transformer functions have a similar structure. Let's pick one and look at it
+```{r}
+styler:::remove_space_after_opening_paren # corresponds to get_transformers()$space[[7]]
+```
+
+As the name says, this function removes space after the opening parenthesis. But
+how? Its imput is a flat parse table. Since the visitor (functions `pre_visit()`
+and `post_visit()` will go through all levels of nesting, we don't need to care
+about that - we just need a function that can be applied to a flat parse table,
+i.e at one level of nesting.
+We can compute the nested parse table and look at one of the levels of nesting
+that are interesting for us (more on the data structure in the vignettes 
+"Data structures" and "Manipulating the parse table")
+```{r}
+pd <- styler:::compute_parse_data_nested("call( 3)") %>%
+  styler:::pre_visit(c(styler:::create_filler))
+pd$child[[1]] %>%
+  select(token, terminal, text, newlines, spaces)
+```
+All the function `remove_space_after_opening_paren()` now does is looking 
+for the opening bracket and setting the column spaces of the token to one. Note 
+that it is very important to check whether there is also a line break following 
+after that token. If so, `space` should not be touched since the way 
+`spaces` and `newlines` are defined. `spaes` are the number of spaces after a 
+token and it's `newlines`. Hence, if a line break follows, spaces are not EOL
+spaces, but rather the spaces directly before the next token. If there is a 
+line break after the token and the value of `use_raw_indention` is set to TRUE,
+which means indention is not touched and the rule would not check for that, 
+indention before the token after `(` would be removed, which we don't want.
+
+If we apply the rule to our parse table, we can see that the column `spaes` 
+changes.
+```{r}
+styler:::remove_space_after_opening_paren(pd$child[[1]]) %>%
+  select(token, terminal, text, newlines, spaces)
+```
+
+All top-level styling functions have an argument `transformers` (which defaults
+to `get_transformers()`. Let's do the whole styling of a string with just this
+one function.
+```{r}
+transformers <- 
+  list(
+    # transformer functions
+    filler            = styler:::create_filler,
+    line_break        = NULL,
+    space             = styler:::remove_space_after_opening_paren,
+    token             = NULL,
+
+    # transformer options
+    use_raw_indention = TRUE,
+    NULL
+  )
+```
+
+When this rule is applied and the transformed nested parse table is 
+serialized, we get:
+```{r}
+styler:::parse_transform_serialize(
+  "call( 1)", 
+  transformers = transformers
+)
+```
+
+No other rules are applied, we won't get any spaces inserted after a comma
+```{r}
+styler:::parse_transform_serialize(
+  "call( 1,1,1,1)", 
+  transformers = transformers
+)
+```
+
+I hope you have aquired a basic understanding of how you can provide your own
+tranformer functions. One thing is really important ha not yet been said though,
+and it is 
+
+The sequence in which styler applies rules is the following:
+
+* call `create_filler()` to initialize some variables.
+* modify the line breaks
+* modify the spaces
+* modify the tokens
+
+You can also look it up in the function that applies the transformers: 
+`apply_transformers()`:
+```{r}
+styler:::apply_transformers
+```
+
