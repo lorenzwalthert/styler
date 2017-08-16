@@ -2,7 +2,11 @@
 title: "Customizing styler"
 author: "Lorenz Walthert"
 date: "8/10/2017"
-output: html_document
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Customizing styler}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 This vignette gives a high-level overview about how styler works and how you
@@ -30,7 +34,7 @@ There are three major steps that styler performs in order to style code:
    specified in the nested parse table. 
 
 The argument transformers is, apart from the code to style, the key argument 
-of functinos such as `style_text()` and friends. The transformers are a named
+of functions such as `style_text()` and friends. The transformers are a named
 list of transformer functions and other arguments passed to styler. To use the
 default style guide of styler (the tidyverse style guide), call
 `get_transformers()` to get the list of the transformer functions. Let's quickly
@@ -43,7 +47,7 @@ str(get_transformers(), max.level = 2, give.attr = FALSE)
 ```
 
 We note that there are different types of transformer functions. `filler` is
-enriching the parse table (so it is not acually a transformer), the other 
+enriching the parse table (so it is not actually a transformer), the other 
 elements modify either spacing, line break or tokens. `use_raw_indention` is 
 not a function, it is just an option.
 All transformer functions have a similar structure. Let's pick one and look at it
@@ -52,7 +56,7 @@ styler:::remove_space_after_opening_paren # corresponds to get_transformers()$sp
 ```
 
 As the name says, this function removes space after the opening parenthesis. But
-how? Its imput is a flat parse table. Since the visitor (functions `pre_visit()`
+how? Its input is a flat parse table. Since the visitor (functions `pre_visit()`
 and `post_visit()` will go through all levels of nesting, we don't need to care
 about that - we just need a function that can be applied to a flat parse table,
 i.e at one level of nesting.
@@ -118,8 +122,8 @@ styler:::parse_transform_serialize(
 )
 ```
 
-I hope you have aquired a basic understanding of how you can provide your own
-tranformer functions. One thing is really important ha not yet been said though,
+I hope you have acquired a basic understanding of how you can provide your own
+transformer functions. One thing is really important ha not yet been said though,
 and it is 
 
 The sequence in which styler applies rules is the following:

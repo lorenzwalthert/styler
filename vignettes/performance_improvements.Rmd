@@ -11,10 +11,6 @@ vignette: >
 ---
 
 We want to make styler faster.
-```{r, echo = FALSE}
-knitr::opts_chunk$set(eval = FALSE)
-```
-
 
 ```{r}
 library(styler)
