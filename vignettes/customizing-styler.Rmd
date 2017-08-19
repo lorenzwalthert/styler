@@ -34,16 +34,17 @@ There are three major steps that styler performs in order to style code:
    specified in the nested parse table. 
 
 The argument transformers is, apart from the code to style, the key argument 
-of functions such as `style_text()` and friends. The transformers are a named
+of functions such as `style_text()` and friends. By default, it is created 
+via the argument `style()`The transformers are a named
 list of transformer functions and other arguments passed to styler. To use the
 default style guide of styler (the tidyverse style guide), call
-`get_transformers()` to get the list of the transformer functions. Let's quickly
+`tidyverse_style()` to get the list of the transformer functions. Let's quickly
 look at what those are.
-```{r}
+```{r, message = FALSE}
 library("styler")
 library("dplyr")
-names(get_transformers())
-str(get_transformers(), max.level = 2, give.attr = FALSE)
+  names(tidyverse_style())
+str(tidyverse_style(), give.attr = FALSE, list.len = 3)
 ```
 
 We note that there are different types of transformer functions. `filler` is
@@ -52,86 +53,104 @@ elements modify either spacing, line break or tokens. `use_raw_indention` is
 not a function, it is just an option.
 All transformer functions have a similar structure. Let's pick one and look at it
 ```{r}
-styler:::remove_space_after_opening_paren # corresponds to get_transformers()$space[[7]]
+tidyverse_style()$space$remove_space_after_opening_paren
 ```
 
 As the name says, this function removes space after the opening parenthesis. But
-how? Its input is a flat parse table. Since the visitor (functions `pre_visit()`
+how? Its input only is a flat parse table. Since the visitor functions `pre_visit()`
 and `post_visit()` will go through all levels of nesting, we don't need to care
 about that - we just need a function that can be applied to a flat parse table,
 i.e at one level of nesting.
 We can compute the nested parse table and look at one of the levels of nesting
-that are interesting for us (more on the data structure in the vignettes 
-"Data structures" and "Manipulating the parse table")
+that is interesting for us (more on the data structure in the vignettes 
+"Data structures" and "Manipulating the parse table"):
+
 ```{r}
-pd <- styler:::compute_parse_data_nested("call( 3)") %>%
+string_to_format <- "call( 3)"
+pd <- styler:::compute_parse_data_nested(string_to_format) %>%
   styler:::pre_visit(c(styler:::create_filler))
 pd$child[[1]] %>%
   select(token, terminal, text, newlines, spaces)
 ```
+
+`create_filler()` is called to initialize some variables, it does not actually
+transform the parse table.
+
 All the function `remove_space_after_opening_paren()` now does is looking 
-for the opening bracket and setting the column spaces of the token to one. Note 
+for the opening bracket and setting the column `spaces` of the token to one. Note 
 that it is very important to check whether there is also a line break following 
 after that token. If so, `space` should not be touched since the way 
 `spaces` and `newlines` are defined. `spaes` are the number of spaces after a 
 token and it's `newlines`. Hence, if a line break follows, spaces are not EOL
 spaces, but rather the spaces directly before the next token. If there is a 
-line break after the token and the value of `use_raw_indention` is set to TRUE,
+line break after the token and the value of `use_raw_indention` is set to `TRUE`,
 which means indention is not touched and the rule would not check for that, 
 indention before the token after `(` would be removed, which we don't want.
 
 If we apply the rule to our parse table, we can see that the column `spaes` 
 changes.
+
 ```{r}
 styler:::remove_space_after_opening_paren(pd$child[[1]]) %>%
   select(token, terminal, text, newlines, spaces)
 ```
 
-All top-level styling functions have an argument `transformers` (which defaults
-to `get_transformers()`. Let's do the whole styling of a string with just this
-one function.
-```{r}
-transformers <- 
-  list(
-    # transformer functions
-    filler            = styler:::create_filler,
-    line_break        = NULL,
-    space             = styler:::remove_space_after_opening_paren,
-    token             = NULL,
+All top-level styling functions have an argument `style` (which defaults
+to `tidyverse_style`). If you check out the help file, you can see that the 
+argument `style` is only used to create the default argument `transformers`, 
+which defaults to `style(...)`. This allows to specify options of the styling
+withough specifying them inside the function passed to `transformers`.
 
-    # transformer options
-    use_raw_indention = TRUE,
-    NULL
+Let's clarify that with an example. The following yields the same result:
+```{r}
+all.equal(
+  style_text(string_to_format, transformers = tidyverse_style(strict = FALSE)),
+  style_text(string_to_format, style = tidyverse_style, strict = FALSE),
+  style_text(string_to_format, strict = FALSE),
   )
 ```
 
-When this rule is applied and the transformed nested parse table is 
-serialized, we get:
+Now let's do the whole styling of a string with just this
+one transformer introduced above. We do this by first creating a style guide, 
+with the designated wrapper function `create_style_guide`.
+It takes transformer functions as input and returns them in a named list that 
+meets the formal requirements for styling functions.
+
 ```{r}
-styler:::parse_transform_serialize(
-  "call( 1)", 
-  transformers = transformers
-)
+space_after_opening_style <- function(are_you_sure) {
+  create_style_guide(space = if (are_you_sure) styler:::remove_space_after_opening_paren)
+}
+style_text("call( 1,1)", style = space_after_opening_style, are_you_sure = FALSE)  
+
 ```
 
-No other rules are applied, we won't get any spaces inserted after a comma
-```{r}
-styler:::parse_transform_serialize(
-  "call( 1,1,1,1)", 
-  transformers = transformers
-)
-```
+Note that the return value of your `style` function may not contain `NULL` 
+elements.
 
-I hope you have acquired a basic understanding of how you can provide your own
-transformer functions. One thing is really important ha not yet been said though,
-and it is 
+I hope you have acquired a basic understanding of how styler transforms code.
+You can provide your own transformer functions and use `create_style_guide()`
+to create customized code styling. If you do so, there are a few more things you
+should be aware of, which are described in the next section.
+
+# Implementation details
+
+For both spaces and line break information in the nested parse table, we use 
+four attributes in total: `lag_newlines`, `newlines`, `spaces`, `lag_spaces`. 
+`lag_spaces` is created from `spaces` only just before the parse table is 
+serialized, so it is not relevant for styling directly.
+These columns are to some degree redundant obviously (execpt for the first and the last 
+element). 
 
 The sequence in which styler applies rules is the following:
 
 * call `create_filler()` to initialize some variables.
-* modify the line breaks
-* modify the spaces
-* modify the tokens
+* modify the line breaks (modifying `lag_newlines` only).
+* modify the spaces (modifying `spaces` only based on `lag_newlines`, 
+  `newlines` and `multi_line` and `token` and `text`).
+* modify the tokens (based on `newlines` `lag_newlines`, `spaces` `multi_line`, 
+  `token` and `text`).
+* modify the indention by changing `indention_ref_id` (based on `newlines` 
+  `lag_newlines`, `spaces` `multi_line`, `token` and `text`).
 
 You can also look it up in the function that applies the transformers: 
 `apply_transformers()`:
@@ -139,3 +158,13 @@ You can also look it up in the function that applies the transformers:
 styler:::apply_transformers
 ```
 
+This means that the order of the styling is clearly defined and it is for 
+example not possible to modify line breaks based on spacing, because spacing
+will be set after line breaks are set. Do not rely on the information `col1`,
+`col2`, `line1`, `line2`, in any of your function since these columns do only
+reflect the position of tokens at the point of parsing, i.e. they are not kept
+up to date through the process of styling.
+Also, as indicated above, work with `lag_nelwines` only in your line break 
+rules. For development purposes, you also may want to use the unexported 
+function `test_collection()` to help you with testing your style guide. You can 
+find more information in the help file of the function. 
