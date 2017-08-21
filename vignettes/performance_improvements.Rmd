@@ -10,6 +10,10 @@ vignette: >
 
 ---
 
+```{r}
+knitr::opts_chunk$set(eval = FALSE)
+```
+
 We want to make styler faster.
 
 ```{r}
