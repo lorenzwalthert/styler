@@ -1,8 +1,10 @@
+# Introduction
+
 Welcome to the website of the Google Summer of Code 2017 project Non-invasive
 source code formatting, a source code formatter for the R language. 
 
-Over the course of three months [Lorenz Walthert](www.lorenzwalthert.github.io/about)
-and his two mentors [Kirill Müller]() and 
+Over the course of three months [Lorenz Walthert](https://lorenzwalthert.github.io/about/)
+and his two mentors [Kirill Müller](https://twitter.com/krlmlr) and 
 [Yihui Xie](https://yihui.name/en/about/) worked on the R package styler, which
 evolved from a proof of concept to a ready-for-production source code formatter.
 Because it is so exciting and pictures say more than 1000 words, we just want 
