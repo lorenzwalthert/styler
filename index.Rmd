@@ -34,8 +34,11 @@ provide infrastructure that allows performing the above steps and implementing
 one particular style guide: 
 The [tidyverse style guide](http://style.tidyverse.org). However, since 
 technically speaking, the style guide is just a set of transformer functions,
-everybody can implement a style guide. There is a [vignette]() that describes how
+everybody can implement a style guide. There is a [vignette](articles/customizing-styler.html) that describes how
 to do that with an example.
+
+To find more about the contribution made to styler through Google Summer of 
+Code 2017, you can have a look at the corresponding [vignette](articles/gsoc_contrib.html).
 
 
 # Further Resources
