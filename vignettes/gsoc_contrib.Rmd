@@ -152,4 +152,61 @@ It is nice to see that `styler` already got some traction from the community.
 The maintainer of the package [reprex](https://github.com/tidyverse/reprex) 
 plans to [add styler as a dependency](https://github.com/tidyverse/reprex/issues/94).
 
+# Low-level analysis
+
+We can use the package `gitsum` to perform an analysis of the GitHub repository.
+```{r, message = FALSE}
+library("gitsum")
+library("tidyverse")
+log <- git_log_detailed() %>%
+  filter(date > as.Date("2017-06-01"), date < as.Date("2017-08-31"))
+```
+
+We can see that the vast majority of the commits in this period comes from the 
+student and a few from the main mentor.
+```{r}
+log %>%
+  group_by(author_name) %>%
+  count()
+```
+
+
+We can also look at how the number of lines in the different files eveolved
+```{r}
+lines <- log %>%
+  add_line_history()
+
+r_files <- grep("^R/", lines$changed_file, value = TRUE)
+
+to_plot <- lines %>%
+  filter(changed_file %in% r_files) %>%
+  group_by(changed_file) %>%
+  mutate(has_changed = n() > 1) %>%
+  filter(has_changed)
+  
+ggplot(to_plot, aes(x = date, y = current_lines)) + 
+  geom_step() + 
+  scale_y_continuous(name = "Number of Lines", limits = c(0, NA)) + 
+  facet_wrap(~changed_file, scales = "free_y")
+```
+
+The total number of insertions and deletions by the author is
+```{r}
+log %>%
+  filter(author_name == "Lorenz Walthert") %>%
+  summarize(sum(total_insertions) + sum(total_deletions)) %>%
+  pull()
+```
+
+Which still contains many insertions and deletions in some files that were
+generated as a biproduct, so let's focus on the code in the `R` directory.
+
+```{r}
+log %>%
+  unnest() %>%
+  filter(dirname(changed_file) == "R") %>%
+  summarize(sum(insertions) + sum(deletions)) %>%
+  pull()
+```
+
 
