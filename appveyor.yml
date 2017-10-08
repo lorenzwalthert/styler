@@ -13,6 +13,9 @@ init:
         pandoc -v
 
 
+install:
+  - ps: Bootstrap
+
 cache:
 - C:\RLibrary
 
