@@ -55,6 +55,7 @@ Collate:
     'serialize.R'
     'set-assert-args.R'
     'style-guides.R'
+    'style-roxgen-examples.R'
     'styler.R'
     'testing.R'
     'token-create.R'
