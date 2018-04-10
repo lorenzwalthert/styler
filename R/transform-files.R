@@ -104,7 +104,7 @@ parse_transform_serialize <- function(text, transformers) {
     return("")
   }
 
-  flattened_pd <- transmute_until_fit(pd_nested, transformers)
+  flattened_pd <- transform_pd_until_fit(pd_nested, transformers)
 
   serialized_transformed_text <- flattened_pd %>%
     apply_ref_indention() %>%
@@ -124,20 +124,25 @@ parse_transform_serialize <- function(text, transformers) {
 #' Transform a parse table until all transformers have taken effect
 #'
 #' First applies transformations that do not depend on token positions (
-#' called base transformations) including flattening out and enriching the
-#' parse data. Then, apply transformations that do (called
+#' called base transformations). Then, apply transformations that do (called
 #' positional transformations), and potentially invalidate base transformations.
-#' Then, go back applying base transformations and fiddle transformation until
-#' nothing changes anymore using a recursion.
-transmute_until_fit <- function(pd, transformers, round = 1) {
+#' Then, go back applying base transformations and positional transformations
+#' until nothing changes anymore using a recursion.
+transform_pd_until_fit <- function(pd, transformers, round = 1) {
   # need to import zeallot's %<-%
-  c(fiddled_pd, changed) %<-% transform_flatten_enrich_pd(pd, transformers) %>%
-    fiddle_line_breaks()
+  c(transformed_pd, changed) %<-% base_transform_pd(pd, transformers) %>%
+    positional_transform_pd()
   if (!changed || round >= 5L) {
-    return(fiddled_pd)
+    return(transformed_pd)
   } else {
-    transmute_until_fit(pd, transformers, round = round + 1L)
+    transform_pd_until_fit(pd, transformers, round = round + 1L)
   }
+}
+
+
+positional_transform_pd <- function(pd, transformers) {
+  pd %>%
+    fiddle_line_breaks(transformers)
 }
 
 fiddle_line_breaks <- function(pd, transformers) {
@@ -150,13 +155,14 @@ fiddle_line_breaks <- function(pd, transformers) {
   list(pd, changed)
 }
 
-#' Transform a post-process it
+#' Base-transform parse data
 #'
-#' Simple wrapper to bundle transforming, flattenening out and enriching
-#' a parse table.
+#' Base-transforms parse data with transformers. This is a simple wrapper to
+#' bundle application of actual transforming, flattenening out and enriching a
+#' parse table.
 #' @param pd_nested A nested parse table
 #' @param transformers Transformer functions to be applyied to the parse data.
-transform_flatten_enrich_pd <- function(pd_nested, transformers) {
+base_transform_pd <- function(pd_nested, transformers) {
   transformed_pd <- apply_transformers(pd_nested, transformers)
   flattened_pd <- post_visit(transformed_pd, list(extract_terminals)) %>%
     enrich_terminals(transformers$use_raw_indention)
