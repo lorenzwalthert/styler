@@ -103,23 +103,32 @@ parse_transform_serialize <- function(text, transformers) {
     )
     return("")
   }
-  transformed_pd <- apply_transformers(pd_nested, transformers)
-  flattened_pd <- post_visit(transformed_pd, list(extract_terminals)) %>%
-    enrich_terminals(transformers$use_raw_indention) %>%
+  flattened_pd <- transform_flatten_enrich_pd(pd_nested, transformers)
+  serialized_transformed_text <- flattened_pd %>%
     apply_ref_indention() %>%
     set_regex_indention(
       pattern          = transformers$reindention$regex_pattern,
       target_indention = transformers$reindention$indention,
       comments_only    = transformers$reindention$comments_only
-    )
-  serialized_transformed_text <-
-    serialize_parse_data_flattened(flattened_pd, start_line = start_line)
+    ) %>%
+    serialize_parse_data_flattened(start_line = start_line)
 
   if (can_verify_roundtrip(transformers)) {
     verify_roundtrip(text, serialized_transformed_text)
   }
   serialized_transformed_text
 }
+
+
+
+transform_flatten_enrich_pd <- function(pd_nested, transformers) {
+  transformed_pd <- apply_transformers(pd_nested, transformers)
+  flattened_pd <- post_visit(transformed_pd, list(extract_terminals)) %>%
+    enrich_terminals(transformers$use_raw_indention)
+  flattened_pd
+}
+
+
 
 #' Apply transformers to a parse table
 #'
