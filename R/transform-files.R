@@ -103,7 +103,9 @@ parse_transform_serialize <- function(text, transformers) {
     )
     return("")
   }
-  flattened_pd <- transform_flatten_enrich_pd(pd_nested, transformers)
+
+  flattened_pd <- transmute_until_fit(pd_nested, transformers)
+
   serialized_transformed_text <- flattened_pd %>%
     apply_ref_indention() %>%
     set_regex_indention(
@@ -119,8 +121,41 @@ parse_transform_serialize <- function(text, transformers) {
   serialized_transformed_text
 }
 
+#' Transform a parse table until all transformers have taken effect
+#'
+#' First applies transformations that do not depend on token positions (
+#' called base transformations) including flattening out and enriching the
+#' parse data. Then, apply transformations that do (called
+#' positional transformations), and potentially invalidate base transformations.
+#' Then, go back applying base transformations and fiddle transformation until
+#' nothing changes anymore using a recursion.
+transmute_until_fit <- function(pd, transformers, round = 1) {
+  # need to import zeallot's %<-%
+  c(fiddled_pd, changed) %<-% transform_flatten_enrich_pd(pd, transformers) %>%
+    fiddle_line_breaks()
+  if (!changed || round >= 5L) {
+    return(fiddled_pd)
+  } else {
+    transmute_until_fit(pd, transformers, round = round + 1L)
+  }
+}
 
+fiddle_line_breaks <- function(pd, transformers) {
+  old_lag_newlines <- pd$lag_newlines
+  # advantage of visit_one(): rules have same structure as current transformers
+  # disadvantage: No way of identifying whether a rule has modified pd or not.
+  # solution: Add addtribute to pd? Environment variable?
+  pd <- visit_one(pd, transformers$line_breaks_post)
+  changed <- !all(pd$lag_newlines == old_lag_newlines)
+  list(pd, changed)
+}
 
+#' Transform a post-process it
+#'
+#' Simple wrapper to bundle transforming, flattenening out and enriching
+#' a parse table.
+#' @param pd_nested A nested parse table
+#' @param transformers Transformer functions to be applyied to the parse data.
 transform_flatten_enrich_pd <- function(pd_nested, transformers) {
   transformed_pd <- apply_transformers(pd_nested, transformers)
   flattened_pd <- post_visit(transformed_pd, list(extract_terminals)) %>%
