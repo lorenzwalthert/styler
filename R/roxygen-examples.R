@@ -12,7 +12,8 @@ style_roxygen_code_example <- function(example, transformers) {
   bare <- parse_roxygen(example)
   one_dont <- split(bare, factor(cumsum(bare %in% dont_keywords())))
   map(one_dont, style_roxygen_code_example_segment, transformers) %>%
-    flatten_chr()
+    flatten_chr() %>%
+    add_roxygen_mask()
 }
 
 #' Style a roxygen code example segment
@@ -35,10 +36,9 @@ style_roxygen_code_example <- function(example, transformers) {
 #' @importFrom purrr map2 flatten_chr
 #' @keywords internal
 style_roxygen_code_example_segment <- function(one_dont, transformers) {
-  one_dont <- remove_blank_lines(one_dont)
   if (length(one_dont) < 1L) return(character())
   dont_seqs <- find_dont_seqs(one_dont)
-  split_segments <- split_roxygen_segments(one_dont, unlist(dont_seqs))
+  split_segments <- split_roxygen_segments(one_dont, unlist(dont_seqs), "alternating")
   is_dont <-
     seq2(1L, length(split_segments$separated)) %in% split_segments$selectors
 
@@ -46,8 +46,7 @@ style_roxygen_code_example_segment <- function(one_dont, transformers) {
        style_roxygen_example_snippet,
     transformers = transformers
   ) %>%
-    flatten_chr() %>%
-    add_roxygen_mask()
+    flatten_chr()
 
 }
 
