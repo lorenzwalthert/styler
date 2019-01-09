@@ -60,7 +60,7 @@ style_active_file <- function() {
   } else if (is_plain_r_file(context$path) | is_unsaved_file(context$path)) {
     out <- try_transform_as_r_file(context, transformer)
   } else {
-    abort("Can only style .R, .Rmd and .Rnw files.")
+    out <- stylermd::tidy_text(readLines(context$path))
   }
   rstudioapi::modifyRange(
     c(1, 1, length(context$contents) + 1, 1),
@@ -167,7 +167,7 @@ try_transform_as_r_file <- function(context, transformer) {
     error = function(e) {
       preamble_for_unsaved <- paste(
         "Styling of unsaved files is only supported for R files with valid code.",
-        "Please save the file (as .R or .Rmd) and make sure that the R code in it",
+        "Please save the file and make sure that the R code in it",
         "can be parsed. Then, try to style again."
       )
 

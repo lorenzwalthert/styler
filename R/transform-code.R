@@ -22,7 +22,7 @@ transform_code <- function(path, fun, ...) {
       ...
     )
   } else {
-    abort(paste(path, "is not an R, Rmd or Rnw file"))
+    stylermd::tidy_file(path)
   }
 }
 
@@ -39,7 +39,7 @@ transform_code <- function(path, fun, ...) {
 transform_mixed <- function(lines, transformer_fun, filetype) {
   chunks <- separate_chunks(lines, filetype)
   chunks$r_chunks <- map(chunks$r_chunks, transformer_fun)
-
+  chunks$text_chunks <- map(chunks$text_chunks, stylermd::tidy_text)
   map2(chunks$text_chunks, c(chunks$r_chunks, list(character(0))), c) %>%
     flatten_chr()
 }
