@@ -178,13 +178,15 @@ style_dir <- function(path = ".",
                       ...,
                       style = tidyverse_style,
                       transformers = style(...),
-                      filetype = c("R", "Rprofile"),
+                      filetype = fallback(c("R", "Rprofile")),
                       recursive = TRUE,
                       exclude_files = NULL,
                       include_roxygen_examples = TRUE) {
+  filetype <- resolve_fallback(filetype)$value
   changed <- withr::with_dir(
     path, prettify_any(
-      transformers, filetype, recursive, exclude_files, include_roxygen_examples
+      transformers, filetype = filetype,
+      recursive, exclude_files, include_roxygen_examples
     )
   )
   invisible(changed)

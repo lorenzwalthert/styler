@@ -5,9 +5,8 @@
 \title{Prettify arbitrary R code}
 \usage{
 style_dir(path = ".", ..., style = tidyverse_style,
-  transformers = style(...), filetype = c("R", "Rprofile"),
-  recursive = TRUE, exclude_files = NULL,
-  include_roxygen_examples = TRUE)
+  transformers = style(...), filetype = "R", recursive = TRUE,
+  exclude_files = NULL, include_roxygen_examples = TRUE)
 }
 \arguments{
 \item{path}{Path to a directory with files to transform.}
