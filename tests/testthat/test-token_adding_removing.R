@@ -30,3 +30,9 @@ test_that("braces only added to pipe if RHS is a symbol", {
   expect_warning(test_collection("token_adding_removing", "add_brackets_in_pipe",
                                  transformer = style_text), NA)
 })
+
+
+test_that("argument package in library() is not quoted", {
+  expect_warning(test_collection("token_adding_removing", "library",
+                                 transformer = style_text), NA)
+})

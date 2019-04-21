@@ -148,6 +148,7 @@ tidyverse_style <- function(scope = "tokens",
   token_manipulators <- if (scope >= "tokens") {
     lst(
       fix_quotes,
+      remove_quotes_in_library_call,
       force_assignment_op,
       resolve_semicolon,
       add_brackets_in_pipe,
