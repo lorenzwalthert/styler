@@ -8,15 +8,17 @@ remove_quotes_in_library_call(pd)
 }
 \description{
 Function finds the position in the parse table that corresponds to the
-argument \code{package}, if any. The argument corresponds to the first
-unnamed argument, or to the named argument \code{package}.
-Note that for this, we can't use \code{match.call()} because it does not
+argument \code{package}, if any. The argument corresponds to the named argument
+\code{package} or the first unnamed argument otherwise.
+Note that for fiding the argument \code{package}, we can't use \code{match.call()}
+because it does not
 preserve the order. Then, the quotes are removed if and only if the
 package argument is a string and not a symbol plus \code{character.only} is set
-to \code{FALSE}.
+to \code{FALSE}. To determine the value of \code{character.only}, we can use
+\code{\link[=match.call]{match.call()}}.
 }
 \examples{
-style_text("tidyverse")
-style_text("tidyverse", character.only = TRUE)
+style_text("library('tidyverse', character.only = TRUE)")
+style_text("library(tidyverse, character.only = TRUE)")
 }
 \keyword{internal}
