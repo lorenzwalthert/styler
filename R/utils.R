@@ -27,12 +27,16 @@ odd <- function(x) {
 }
 
 odd_index <- function(x) {
-  if (length(x) < 1) return(NULL)
+  if (length(x) < 1) {
+    return(NULL)
+  }
   seq(1L, length(x), by = 2)
 }
 
 even <- function(x) {
-  if (length(x) < 2) return(NULL)
+  if (length(x) < 2) {
+    return(NULL)
+  }
   x[even_index(x)]
 }
 
@@ -49,10 +53,9 @@ even_index <- function(x) {
 #' @param ... Arguments passed to [shell()] or [system()].
 #' @keywords internal
 calls_sys <- function(sys_call, ...) {
-  if (Sys.info()[1] == "Windows") {
+  if (.Platform$OS.type != "unix") {
     error <- shell(sys_call, ...)
   } else {
     error <- system(sys_call, ...)
   }
 }
-
