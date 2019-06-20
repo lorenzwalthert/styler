@@ -54,7 +54,8 @@ style_active_file <- function() {
   )
 
   if (is_rmd_file(context$path)) {
-    out <- transform_mixed(context$contents, transformer, filetype = "Rmd")
+    out <- transform_mixed(context$contents, transformer, filetype = "Rmd") %>%
+      stylermd::tidy_text()
   } else if (is_rnw_file(context$path)) {
     out <- transform_mixed(context$contents, transformer, filetype = "Rnw")
   } else if (is_plain_r_file(context$path) | is_unsaved_file(context$path)) {
