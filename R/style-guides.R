@@ -368,3 +368,39 @@ tidyverse_math_token_spacing <- function() {
     one = c("'+'", "'-'", "'*'", "'/'")
   )
 }
+
+
+
+random_style <- function(p = 0.01,
+                         use_raw_indention = TRUE,
+                         reindention = tidyverse_reindention()) {
+
+  shuffle_newlines <- function(pd_flat) {
+    to_modify <- sample(0:1, nrow(pd_flat), replace = TRUE, prob = c(1 - p, p))
+    has_linebreak <- pd_flat$lag_newlines > 0
+    pd_flat$lag_newlines[has_linebreak] <- sample(1:2, sum(has_linebreak), replace = TRUE, prob = c(0.9, 0.1))
+    pd_flat
+  }
+
+  shuffle_spaces <- function(pd_flat) {
+    to_modify <- sample(0:1, nrow(pd_flat), replace = TRUE, prob = c(1 - p, p))
+
+    pd_flat$spaces <- sample(0:4, nrow(pd_flat), replace = TRUE, prob = c(0.4, 0.2, 0.2, 0.1, 0.1))
+    pd_flat
+
+  }
+  style_guide_name <- "styler::random_style@https://github.com/r-lib"
+  create_style_guide(
+    # transformer functions
+    initialize          = default_style_guide_attributes,
+    line_break          =        list(shuffle_newlines),
+    space               =             list(shuffle_spaces),
+    token               =             list(),
+    indention           =             list(),
+    # transformer options
+    use_raw_indention   =              use_raw_indention,
+    reindention         =                    reindention,
+    style_guide_name    =               style_guide_name,
+    style_guide_version =                 styler_version
+  )
+}
