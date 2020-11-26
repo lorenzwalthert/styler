@@ -183,7 +183,7 @@
 <a href="#api-changes" class="anchor"></a>API Changes</h2>
 <ul>
 <li><p><code><a href="../reference/style_file.html">style_file()</a></code> and friends gain argument <code>dry</code> to control if changes should be applied to files or not (<a href='https://github.com/r-lib/styler/issues/634'>#634</a>).</p></li>
-<li><p><code><a href="../reference/style_file.html">style_file()</a></code> and friends gain argument <code>base_indention</code> (defaulting to 0) to control by how much the output code is indented (<a href='https://github.com/r-lib/styler/issues/649'>#649</a>).</p></li>
+<li><p><code><a href="../reference/style_file.html">style_file()</a></code> and friends gain argument <code>base_indention</code> (defaulting to 0) to control by how much the output code is indented (<a href='https://github.com/r-lib/styler/issues/649'>#649</a>, <a href='https://github.com/r-lib/styler/issues/692'>#692</a>).</p></li>
 <li><p>added an option (<code>styler.test_dir_writeable</code>) that changes test behavior to not directly modify test files in the current directory (<a href='https://github.com/r-lib/styler/issues/548'>#548</a>).</p></li>
 <li><p>added an option for disabling all communication when using the package (<code>styler.quiet</code>) (<a href='https://github.com/r-lib/styler/issues/640'>#640</a>).</p></li>
 </ul>
@@ -193,7 +193,7 @@
 <a href="#major-changes" class="anchor"></a>Major changes</h2>
 <ul>
 <li>blank lines in function calls and headers are now removed, for the former only when there are no comments before or after the blank line (<a href='https://github.com/r-lib/styler/issues/629'>#629</a>, <a href='https://github.com/r-lib/styler/issues/630'>#630</a>, <a href='https://github.com/r-lib/styler/issues/635'>#635</a>).</li>
-<li>speed improvement (~10%) when cache is activated because transformers are not captured as character anymore (<a href='https://github.com/r-lib/styler/issues/679'>#679</a>).</li>
+<li>speed improvements: (~10%) when cache is activated because transformers are not captured as character anymore (<a href='https://github.com/r-lib/styler/issues/679'>#679</a>), ~ 3% in low-level optimization (<a href='https://github.com/r-lib/styler/issues/691'>#691</a>). Require magrittr 2.0 gives about 7% speed improvement (<a href='https://github.com/r-lib/styler/issues/681'>#681</a>).</li>
 </ul>
 </div>
 <div id="minor-changes-and-fixes" class="section level2">
@@ -202,13 +202,17 @@
 <ul>
 <li>
 <code><a href="../reference/style_dir.html">style_dir()</a></code> and <code><a href="../reference/style_pkg.html">style_pkg()</a></code> now apply directory exclusion recursively with <code>exclude_dirs</code> (<a href='https://github.com/r-lib/styler/issues/676'>#676</a>).</li>
+<li>unary <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code> before a function call does not give an error anymore, as before version 1.3.0 (<a href='https://github.com/r-lib/styler/issues/697'>#697</a>).</li>
 <li>cache is now correctly invalidated when style guide arguments change (<a href='https://github.com/r-lib/styler/issues/647'>#647</a>).</li>
 <li>empty lines are now removed between pipes (<a href='https://github.com/r-lib/styler/issues/645'>#645</a>).</li>
 <li>overhaul pgkdown site: Add search (<a href='https://github.com/r-lib/styler/issues/623'>#623</a>), group function in Reference (<a href='https://github.com/r-lib/styler/issues/625'>#625</a>).</li>
 <li>always strip trailing spaces and make cache insensitive to it (<a href='https://github.com/r-lib/styler/issues/626'>#626</a>).</li>
+<li>
+<code><a href="../reference/style_text.html">style_text()</a></code> can now style all input that <code><a href="https://rdrr.io/r/base/character.html">is.character()</a></code>, not just if it inherits from classes <code>character</code>, <code>utf8</code> or <code>vertical</code> (<a href='https://github.com/r-lib/styler/issues/693'>#693</a>).</li>
 <li>minor documentation improvements (<a href='https://github.com/r-lib/styler/issues/643'>#643</a>, <a href='https://github.com/r-lib/styler/issues/618'>#618</a>, <a href='https://github.com/r-lib/styler/issues/614'>#614</a>, <a href='https://github.com/r-lib/styler/issues/677'>#677</a>, <a href='https://github.com/r-lib/styler/issues/651'>#651</a>, <a href='https://github.com/r-lib/styler/issues/667'>#667</a>, <a href='https://github.com/r-lib/styler/issues/672'>#672</a>,
 <a href='https://github.com/r-lib/styler/issues/687'>#687</a>).</li>
 <li>The internal <code><a href="../reference/create_tree.html">create_tree()</a></code> only used in testing of styler now works when the cache is activated (<a href='https://github.com/r-lib/styler/issues/688'>#688</a>).</li>
+<li>simplification of internals (<a href='https://github.com/r-lib/styler/issues/692'>#692</a>).</li>
 </ul>
 </div>
 <div id="infrastructure-changes" class="section level2">
@@ -216,7 +220,7 @@
 <a href="#infrastructure-changes" class="anchor"></a>Infrastructure changes</h2>
 <ul>
 <li>switched from travis and AppVeyor to GitHub Actions (<a href='https://github.com/r-lib/styler/issues/653'>#653</a>, <a href='https://github.com/r-lib/styler/issues/660'>#660</a>).</li>
-<li>Added basic continuous benchmarking (<a href='https://github.com/r-lib/styler/issues/674'>#674</a>, <a href='https://github.com/r-lib/styler/issues/684'>#684</a>).</li>
+<li>Added basic continuous benchmarking with <a href="https://github.com/lorenzwalthert/touchstone">lorenzwalthert/touchstone</a> (<a href='https://github.com/r-lib/styler/issues/674'>#674</a>, <a href='https://github.com/r-lib/styler/issues/684'>#684</a>, <a href='https://github.com/r-lib/styler/issues/698'>#698</a>).</li>
 </ul>
 </div>
 </div>
@@ -341,7 +345,7 @@ style_text("1 # comment")
 <ul>
 <li><p>Users can now control style configurations for styler Addins (<a href='https://github.com/r-lib/styler/issues/463'>#463</a>, <a href='https://github.com/r-lib/styler/issues/500'>#500</a>), using the <code>Set style</code> Addin. See <code><a href="../reference/styler_addins.html">?styler::styler_addins</a></code> for details.</p></li>
 <li><p><code><a href="https://rdrr.io/r/base/function.html">return()</a></code> is now always put in braces and put on a new line when used in a conditional statement (<a href='https://github.com/r-lib/styler/issues/492'>#492</a>).</p></li>
-<li><p><code><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></code> almost always causes a line break now for <code>strict = TRUE</code> (<a href='https://github.com/r-lib/styler/issues/503'>#503</a>).</p></li>
+<li><p><code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code> almost always causes a line break now for <code>strict = TRUE</code> (<a href='https://github.com/r-lib/styler/issues/503'>#503</a>).</p></li>
 </ul>
 </div>
 <div id="minor-changes" class="section level2">
