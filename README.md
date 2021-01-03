@@ -19,9 +19,9 @@ customized to format code according to other style guides too.
 
 The following online docs are available:
 
-  - [latest CRAN release](https://styler.r-lib.org).
+-   [latest CRAN release](https://styler.r-lib.org).
 
-  - [GitHub development version](https://styler.r-lib.org/dev).
+-   [GitHub development version](https://styler.r-lib.org/dev).
 
 ## Installation
 
@@ -58,31 +58,34 @@ style_text(ugly_code)
 
 There are a few variants of `style_text()`:
 
-  - `style_file()` styles .R, .Rmd .Rnw and .Rprofile, files.
+-   `style_file()` styles .R, .Rmd .Rnw and .Rprofile, files.
 
-  - `style_dir()` styles all .R and/or .Rmd files in a directory.
+-   `style_dir()` styles all .R and/or .Rmd files in a directory.
 
-  - `style_pkg()` styles the source files of an R package.
+-   `style_pkg()` styles the source files of an R package.
 
-  - RStudio Addins for styling the active file, styling the current
+-   RStudio Addins for styling the active file, styling the current
     package and styling the highlighted code region.
 
 <img src="https://raw.githubusercontent.com/lorenzwalthert/some_raw_data/master/styler_0.1.gif" width="650px" />
 
 ## Configuration
 
-You can decide on the level of invasiveness with the scope argument. You
-can style:
+You can decide on the level of invasiveness with the `scope` argument.
+You can style:
 
-  - just spaces.
+-   spaces.
 
-  - spaces and indention.
+-   indention.
 
-  - spaces, indention and line breaks.
+-   line breaks.
 
-  - spaces, indention, line breaks and tokens.
+-   tokens.
 
-<!-- end list -->
+When specified as a string, `scope` will assume you want to include less
+invasive levels too, i.e. `scope = 'line breaks'` includes all but
+tokens. You can also name scopes explicitly with like this:
+`scope = I(c("tokens", "spaces"))`. Let’s see this in action
 
 ``` r
 ugly_code <- "a=function( x){1+1}           "
@@ -92,9 +95,9 @@ style_text(ugly_code, scope = "spaces")
 
 Note that compared to the default used above `scope = "tokens"`:
 
-  - no line breaks were added.
+-   no line breaks were added.
 
-  - `<-` was not replaced with `=`.
+-   `<-` was not replaced with `=`.
 
 While spaces still got styled (around `=` in `(x)`).
 
@@ -106,16 +109,16 @@ vignette](https://styler.r-lib.org/articles/introducing_styler.html).
 
 ## Features
 
-  - style roxygen2 code examples.
+-   style roxygen2 code examples.
 
-  - do not re-style [deliberate code
+-   do not re-style [deliberate code
     alignment](https://styler.r-lib.org/articles/detect-alignment.html).
 
-  - [ignore some
+-   [ignore some
     lines](https://styler.r-lib.org/dev/reference/stylerignore.html) for
     styling.
 
-  - [cache styled
+-   [cache styled
     expressions](https://styler.r-lib.org/dev/reference/caching.html)
     for speed.
 
@@ -123,48 +126,48 @@ vignette](https://styler.r-lib.org/articles/introducing_styler.html).
 
 styler functionality is made available through other tools, most notably
 
-  - as a pre-commit hook `style-files` in
+-   as a pre-commit hook `style-files` in
     <https://github.com/lorenzwalthert/precommit>
 
-  - `usethis::use_tidy_style()` styles your project according to the
+-   `usethis::use_tidy_style()` styles your project according to the
     tidyverse style guide.
 
-  - via commenting a PR on GitHub with `\style` when the [GitHub
+-   via commenting a PR on GitHub with `\style` when the [GitHub
     Action](https://github.com/features/actions) [*Tidyverse
     CI*](https://github.com/r-lib/actions/tree/master/examples#tidyverse-ci-workflow)
     is used. The most convenient way to set this up is via
     [`usethis::use_tidy_github_actions()`](https://usethis.r-lib.org/reference/tidyverse.html).
 
-  - `reprex::reprex(style = TRUE)` to prettify reprex code before
+-   `reprex::reprex(style = TRUE)` to prettify reprex code before
     printing. To permanently use `style = TRUE` without specifying it
     every time, you can add the following line to your `.Rprofile` (via
     `usethis::edit_r_profile()`): `options(reprex.styler = TRUE)`.
 
-  - you can pretty-print your R code in RMarkdown reports without having
+-   you can pretty-print your R code in RMarkdown reports without having
     styler modifying the source. This feature is implemented as a code
     chunk option in knitr. use `tidy = "styler"` in the header of a code
-    chunks (e.g. ` ```{r name-of-the-chunk, tidy = "styler"} `), or
-    `knitr::opts_chunk$set(tidy = "styler")` at the top of your
+    chunks (e.g. ```` ```{r   name-of-the-chunk, tidy = "styler"} ````),
+    or `knitr::opts_chunk$set(tidy =   "styler")` at the top of your
     RMarkdown script.
 
-  - Adding styler as a fixer to the [ale
+-   Adding styler as a fixer to the [ale
     Plug-in](https://github.com/w0rp/ale/pull/2401#issuecomment-485942966)
     for VIM.
 
-  - pretty-printing of [drake](https://github.com/ropensci/drake)
+-   pretty-printing of [drake](https://github.com/ropensci/drake)
     workflow data frames with `drake::drake_plan_source()`.
 
-  - Adding styler with
+-   Adding styler with
     [emacs-format-all-the-code](https://github.com/lassik/emacs-format-all-the-code)
     for Emacs.
 
 ## Further resources
 
-  - The official [web documentation](https://styler.r-lib.org/) of
+-   The official [web documentation](https://styler.r-lib.org/) of
     styler, containing various vignettes function documentation as well
     as a change-log.
 
-  - The wiki of [Google Summer of Code
+-   The wiki of [Google Summer of Code
     2017](https://github.com/rstats-gsoc/gsoc2017/wiki/Noninvasive-source-code-formatting)
     or the [pkgdown](https://r-lib.github.io/styler/) page contain
     information related to the initial development phase during Google

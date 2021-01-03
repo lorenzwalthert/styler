@@ -83,16 +83,21 @@ knitr::include_graphics("https://raw.githubusercontent.com/lorenzwalthert/some_r
 
 ## Configuration
 
-You can decide on the level of invasiveness with the scope argument. You can
+You can decide on the level of invasiveness with the `scope` argument. You can
 style:
 
-* just spaces.
+* spaces.
 
-* spaces and indention.
+* indention.
 
-* spaces, indention and line breaks.
+* line breaks.
 
-* spaces, indention, line breaks and tokens.
+* tokens.
+
+When specified as a string, `scope` will assume you want to include less 
+invasive levels too, i.e. `scope = 'line breaks'` includes all but tokens. You
+can also name scopes explicitly with like this: 
+`scope = I(c("tokens", "spaces"))`. Let's see this in action
 
 ```{r}
 ugly_code <- "a=function( x){1+1}           "
