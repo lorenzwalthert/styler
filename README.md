@@ -3,11 +3,9 @@
 
 # styler
 
-[![Build
-Status](https://travis-ci.org/r-lib/styler.svg?branch=master)](https://travis-ci.org/r-lib/styler)
-[![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/r-lib/styler?branch=master&svg=true)](https://ci.appveyor.com/project/r-lib/styler)
 [![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
+[![R build
+status](https://github.com/r-lib/styler/workflows/R-CMD-check/badge.svg)](https://github.com/r-lib/styler/actions)
 [![codecov](https://codecov.io/gh/r-lib/styler/branch/master/graph/badge.svg)](https://codecov.io/gh/r-lib/styler)
 [![cran
 version](https://www.r-pkg.org/badges/version/styler)](https://cran.r-project.org/package=styler)
