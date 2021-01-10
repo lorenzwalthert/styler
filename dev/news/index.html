@@ -85,7 +85,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -147,7 +147,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/r-lib/styler/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -186,6 +186,7 @@
 <li><p><code><a href="../reference/style_file.html">style_file()</a></code> and friends gain argument <code>base_indention</code> (defaulting to 0) to control by how much the output code is indented (<a href='https://github.com/r-lib/styler/issues/649'>#649</a>, <a href='https://github.com/r-lib/styler/issues/692'>#692</a>).</p></li>
 <li><p>added an option (<code>styler.test_dir_writeable</code>) that changes test behavior to not directly modify test files in the current directory (<a href='https://github.com/r-lib/styler/issues/548'>#548</a>).</p></li>
 <li><p>added an option for disabling all communication when using the package (<code>styler.quiet</code>) (<a href='https://github.com/r-lib/styler/issues/640'>#640</a>).</p></li>
+<li><p><code>scope</code> in <code><a href="../reference/tidyverse_style.html">tidyverse_style()</a></code> can now be specified with higher granularity through <code><a href="https://rdrr.io/r/base/AsIs.html">I()</a></code>, e.g. <code><a href="https://rdrr.io/r/base/AsIs.html">I(c('spaces', 'tokens'))</a></code> allows us to style spaces and tokens without styling line breaks and indention. Previously, only a string was allowed and all less invasive scopes were included, e.g. if you wanted to style tokens, you had to always also style spaces, indention, line breaks as well (<a href='https://github.com/r-lib/styler/issues/705'>#705</a>, <a href='https://github.com/r-lib/styler/issues/707'>#707</a>).</p></li>
 </ul>
 </div>
 <div id="major-changes" class="section level2">
@@ -211,6 +212,7 @@
 <li>always strip trailing spaces and make cache insensitive to it (<a href='https://github.com/r-lib/styler/issues/626'>#626</a>).</li>
 <li>
 <code><a href="../reference/style_text.html">style_text()</a></code> can now style all input that <code><a href="https://rdrr.io/r/base/character.html">is.character()</a></code>, not just if it inherits from classes <code>character</code>, <code>utf8</code> or <code>vertical</code> (<a href='https://github.com/r-lib/styler/issues/693'>#693</a>).</li>
+<li>logical operators within square braces are now moved from the start of a line to the end of the previous line (<a href='https://github.com/r-lib/styler/issues/709'>#709</a>).</li>
 <li>minor documentation improvements (<a href='https://github.com/r-lib/styler/issues/643'>#643</a>, <a href='https://github.com/r-lib/styler/issues/618'>#618</a>, <a href='https://github.com/r-lib/styler/issues/614'>#614</a>, <a href='https://github.com/r-lib/styler/issues/677'>#677</a>, <a href='https://github.com/r-lib/styler/issues/651'>#651</a>, <a href='https://github.com/r-lib/styler/issues/667'>#667</a>, <a href='https://github.com/r-lib/styler/issues/672'>#672</a>,
 <a href='https://github.com/r-lib/styler/issues/687'>#687</a>).</li>
 <li>The internal <code><a href="../reference/create_tree.html">create_tree()</a></code> only used in testing of styler now works when the cache is activated (<a href='https://github.com/r-lib/styler/issues/688'>#688</a>).</li>
