@@ -272,14 +272,14 @@ apply_transformers <- function(pd_nested, transformers) {
   transformed_updated_multi_line <- post_visit(
     pd_nested,
     c(
-      transformers$initialize, transformers$line_break, set_multi_line,
-      if (!is.null(transformers$line_break)) update_newlines
+      transformers$initialize, transformers$line_breaks, set_multi_line,
+      if (!is.null(transformers$line_breaks)) update_newlines
     )
   )
 
   transformed_all <- pre_visit(
     transformed_updated_multi_line,
-    c(transformers$space, transformers$indention, transformers$token)
+    c(transformers$spaces, transformers$indention, transformers$tokens)
   )
 
   transformed_absolute_indent <- context_to_terminals(
@@ -303,7 +303,7 @@ apply_transformers <- function(pd_nested, transformers) {
 #'   Needed for reverse engineering the scope.
 #' @keywords internal
 can_verify_roundtrip <- function(transformers) {
-  is.null(transformers$token)
+  is.null(transformers$tokens)
 }
 
 #' Verify the styling

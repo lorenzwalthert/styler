@@ -27,7 +27,7 @@ style_text_without_curly_curly <- function(text,
   } else {
     strict <- TRUE
   }
-  transformers$line_break$set_line_break_around_curly_curly <- NULL
+  transformers$line_breaks$set_line_break_around_curly_curly <- NULL
   style_text(text, ...,
     style = NULL, transformers = transformers,
     include_roxygen_examples = include_roxygen_examples

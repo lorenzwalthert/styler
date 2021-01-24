@@ -165,9 +165,9 @@ style_empty <- function(text, base_indention = 0) {
   transformers <- list(
     # transformer functions
     initialize = default_style_guide_attributes,
-    line_break        = NULL,
-    space             = NULL,
-    token             = NULL,
+    line_breaks       = NULL,
+    spaces            = NULL,
+    tokens            = NULL,
     # transformer options
     use_raw_indention = FALSE,
     reindention       = specify_reindention(),
@@ -186,9 +186,9 @@ style_op <- function(text, base_indention = 0) {
   transformers <- list(
     # transformer functions
     initialize        = default_style_guide_attributes,
-    line_break        = NULL,
-    space             = partial(indent_op, indent_by = 2),
-    token             = NULL,
+    line_breaks       = NULL,
+    spaces            = partial(indent_op, indent_by = 2),
+    tokens            = NULL,
     # transformer options
     use_raw_indention = FALSE,
     reindention       = specify_reindention(),

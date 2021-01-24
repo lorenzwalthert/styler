@@ -179,9 +179,9 @@ tidyverse_style <- function(scope = "tokens",
   create_style_guide(
     # transformer functions
     initialize             = default_style_guide_attributes,
-    line_break             =        line_break_manipulators,
-    space                  =             space_manipulators,
-    token                  =             token_manipulators,
+    line_breaks            =        line_break_manipulators,
+    spaces                 =             space_manipulators,
+    tokens                 =             token_manipulators,
     indention              =         indention_manipulators,
     # transformer options
     use_raw_indention      =              use_raw_indention,
@@ -205,7 +205,7 @@ tidyverse_style <- function(scope = "tokens",
 #' done in [tidyverse_style()] with `indent_by` and other arguments.
 #' @param initialize The bare name of a function that initializes various
 #'   variables on each level of nesting.
-#' @param line_break A list of transformer functions that manipulate line_break
+#' @param line_breaks A list of transformer functions that manipulate line_break
 #'   information.
 #' @param space A list of transformer functions that manipulate spacing
 #'   information.
@@ -239,7 +239,7 @@ tidyverse_style <- function(scope = "tokens",
 #' }
 #' set_line_break_before_curly_opening_style <- function() {
 #'   create_style_guide(
-#'     line_break = tibble::lst(set_line_break_before_curly_opening)
+#'     line_breaks = tibble::lst(set_line_break_before_curly_opening)
 #'   )
 #' }
 #' style_text(
@@ -249,21 +249,45 @@ tidyverse_style <- function(scope = "tokens",
 #' @importFrom purrr compact
 #' @export
 create_style_guide <- function(initialize = default_style_guide_attributes,
-                               line_break = NULL,
-                               space = NULL,
-                               token = NULL,
+                               line_breaks = NULL,
+                               spaces = NULL,
+                               tokens = NULL,
                                indention = NULL,
                                use_raw_indention = FALSE,
                                reindention = tidyverse_reindention(),
                                style_guide_name = NULL,
                                style_guide_version = NULL,
-                               more_specs_style_guide = NULL) {
+                               more_specs_style_guide = NULL,
+                               line_break = NULL,
+                               space = NULL,
+                               token = NULL) {
+  if (!is.null(token)) {
+    rlang::warn(paste(
+      'argument `token` is deprecated in favor of `tokens` for consistency",
+      "with `tidyverse_style()` and will be removed in a future release.'
+    ))
+    tokens <- token
+  }
+  if (!is.null(space)) {
+    rlang::warn(paste(
+      'argument `space` is deprecated in favor of `spaces` for consistency",
+      "with `tidyverse_style()` and will be removed in a future release.'
+    ))
+    spaces <- space
+  }
+  if (!is.null(line_break)) {
+    rlang::warn(paste(
+      'argument `line_break` is deprecated in favor of `line_breaks` for consistency",
+      "with `tidyverse_style()` and will be removed in a future release.'
+    ))
+    line_breaks <- line_break
+  }
   lst(
     # transformer functions
     initialize = lst(initialize),
-    line_break,
-    space,
-    token,
+    line_breaks,
+    spaces,
+    tokens,
     indention,
     # transformer options
     use_raw_indention,

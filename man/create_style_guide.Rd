@@ -6,28 +6,26 @@
 \usage{
 create_style_guide(
   initialize = default_style_guide_attributes,
-  line_break = NULL,
-  space = NULL,
-  token = NULL,
+  line_breaks = NULL,
+  spaces = NULL,
+  tokens = NULL,
   indention = NULL,
   use_raw_indention = FALSE,
   reindention = tidyverse_reindention(),
   style_guide_name = NULL,
   style_guide_version = NULL,
-  more_specs_style_guide = NULL
+  more_specs_style_guide = NULL,
+  line_break = NULL,
+  space = NULL,
+  token = NULL
 )
 }
 \arguments{
 \item{initialize}{The bare name of a function that initializes various
 variables on each level of nesting.}
 
-\item{line_break}{A list of transformer functions that manipulate line_break
+\item{line_breaks}{A list of transformer functions that manipulate line_break
 information.}
-
-\item{space}{A list of transformer functions that manipulate spacing
-information.}
-
-\item{token}{A list of transformer functions that manipulate token text.}
 
 \item{indention}{A list of transformer functions that manipulate indention.}
 
@@ -55,6 +53,11 @@ such functions are converted to characters in \code{\link[=cache_make_key]{cache
 they will yield generic code and we loose the specific value of \code{arg} (see
 \code{\link[=cache_make_key]{cache_make_key()}}), even when unquoting these inputs with \verb{!!}
 beforehand in \code{purrr::partial()}.}
+
+\item{space}{A list of transformer functions that manipulate spacing
+information.}
+
+\item{token}{A list of transformer functions that manipulate token text.}
 }
 \description{
 This is a helper function to create a style guide, which is technically
@@ -75,7 +78,7 @@ set_line_break_before_curly_opening <- function(pd_flat) {
 }
 set_line_break_before_curly_opening_style <- function() {
   create_style_guide(
-    line_break = tibble::lst(set_line_break_before_curly_opening)
+    line_breaks = tibble::lst(set_line_break_before_curly_opening)
   )
 }
 style_text(
