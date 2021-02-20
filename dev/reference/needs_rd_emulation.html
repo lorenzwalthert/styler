@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Set line break for multi-line function calls — set_line_break_if_call_is_multi_line • styler</title>
+<title>Check if rd emulation is required with roxygen2::roc_proc_text() — needs_rd_emulation • styler</title>
 
 
 <!-- jquery -->
@@ -45,8 +45,8 @@
 
 
 
-<meta property="og:title" content="Set line break for multi-line function calls — set_line_break_if_call_is_multi_line" />
-<meta property="og:description" content="Set line break for multi-line function calls" />
+<meta property="og:title" content="Check if rd emulation is required with roxygen2::roc_proc_text() — needs_rd_emulation" />
+<meta property="og:description" content="Check if rd emulation is required with roxygen2::roc_proc_text()" />
 
 
 <meta name="robots" content="noindex">
@@ -171,55 +171,18 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Set line break for multi-line function calls</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-lib/styler/blob/master/R/rules-line-breaks.R'><code>R/rules-line-breaks.R</code></a></small>
-    <div class="hidden name"><code>set_line_break_if_call_is_multi_line.Rd</code></div>
+    <h1>Check if rd emulation is required with <code><a href='https://roxygen2.r-lib.org/reference/roc_proc_text.html'>roxygen2::roc_proc_text()</a></code></h1>
+    <small class="dont-index">Source: <a href='https://github.com/r-lib/styler/blob/master/R/roxygen-examples-parse.R'><code>R/roxygen-examples-parse.R</code></a></small>
+    <div class="hidden name"><code>needs_rd_emulation.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Set line break for multi-line function calls</p>
+    <p>Check if rd emulation is required with <code><a href='https://roxygen2.r-lib.org/reference/roc_proc_text.html'>roxygen2::roc_proc_text()</a></code></p>
     </div>
 
-    <pre class="usage"><span class='fu'>set_line_break_before_closing_call</span><span class='op'>(</span><span class='va'>pd</span>, <span class='va'>except_token_before</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>needs_rd_emulation</span><span class='op'>(</span><span class='va'>roxygen</span><span class='op'>)</span></pre>
 
-<span class='fu'>remove_line_break_in_fun_call</span><span class='op'>(</span><span class='va'>pd</span>, <span class='va'>strict</span><span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>pd</th>
-      <td><p>A parse table.</p></td>
-    </tr>
-    <tr>
-      <th>except_token_before</th>
-      <td><p>A character vector with text before "')'" that do
-not cause a line break before "')'".</p></td>
-    </tr>
-    <tr>
-      <th>except_token_after</th>
-      <td><p>A character vector with tokens after "'('" that do
-not cause a line break after "'('".</p></td>
-    </tr>
-    <tr>
-      <th>except_text_before</th>
-      <td><p>A character vector with text before "'('" that do
-not cause a line break after "'('".</p></td>
-    </tr>
-    <tr>
-      <th>force_text_before</th>
-      <td><p>A character vector with text before "'('" that
-forces a line break after every argument in the call.</p></td>
-    </tr>
-    </table>
-
-    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
-
-    
-<ul>
-<li><p><code>set_line_break_before_closing_call</code>: Sets line break before
-closing parenthesis.</p></li>
-</ul>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

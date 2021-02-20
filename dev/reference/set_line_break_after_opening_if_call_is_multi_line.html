@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Set line break for multi-line function calls — set_line_break_if_call_is_multi_line • styler</title>
+<title>Sets line break after opening parenthesis — set_line_break_after_opening_if_call_is_multi_line • styler</title>
 
 
 <!-- jquery -->
@@ -45,8 +45,8 @@
 
 
 
-<meta property="og:title" content="Set line break for multi-line function calls — set_line_break_if_call_is_multi_line" />
-<meta property="og:description" content="Set line break for multi-line function calls" />
+<meta property="og:title" content="Sets line break after opening parenthesis — set_line_break_after_opening_if_call_is_multi_line" />
+<meta property="og:description" content="Sets line break after opening parenthesis" />
 
 
 <meta name="robots" content="noindex">
@@ -171,55 +171,37 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Set line break for multi-line function calls</h1>
+    <h1>Sets line break after opening parenthesis</h1>
     <small class="dont-index">Source: <a href='https://github.com/r-lib/styler/blob/master/R/rules-line-breaks.R'><code>R/rules-line-breaks.R</code></a></small>
-    <div class="hidden name"><code>set_line_break_if_call_is_multi_line.Rd</code></div>
+    <div class="hidden name"><code>set_line_break_after_opening_if_call_is_multi_line.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Set line break for multi-line function calls</p>
+    <p>Sets line break after opening parenthesis</p>
     </div>
 
-    <pre class="usage"><span class='fu'>set_line_break_before_closing_call</span><span class='op'>(</span><span class='va'>pd</span>, <span class='va'>except_token_before</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>set_line_break_after_opening_if_call_is_multi_line</span><span class='op'>(</span>
+  <span class='va'>pd</span>,
+  except_token_after <span class='op'>=</span> <span class='cn'>NULL</span>,
+  except_text_before <span class='op'>=</span> <span class='cn'>NULL</span>,
+  force_text_before <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
-<span class='fu'>remove_line_break_in_fun_call</span><span class='op'>(</span><span class='va'>pd</span>, <span class='va'>strict</span><span class='op'>)</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>pd</th>
-      <td><p>A parse table.</p></td>
-    </tr>
-    <tr>
-      <th>except_token_before</th>
-      <td><p>A character vector with text before "')'" that do
-not cause a line break before "')'".</p></td>
-    </tr>
-    <tr>
-      <th>except_token_after</th>
-      <td><p>A character vector with tokens after "'('" that do
-not cause a line break after "'('".</p></td>
-    </tr>
-    <tr>
-      <th>except_text_before</th>
-      <td><p>A character vector with text before "'('" that do
-not cause a line break after "'('".</p></td>
-    </tr>
-    <tr>
-      <th>force_text_before</th>
-      <td><p>A character vector with text before "'('" that
-forces a line break after every argument in the call.</p></td>
-    </tr>
-    </table>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
-
-    
-<ul>
-<li><p><code>set_line_break_before_closing_call</code>: Sets line break before
-closing parenthesis.</p></li>
+    <p>In general, every call that is multi-line has a line break after the opening
+parenthesis. Exceptions:</p><ul>
+<li><p>The token right after the parenthesis is a comment, then, the line should
+be broken after the comment only. Governed by <code>except_token_after</code>.</p></li>
+<li><p>The name of the function called is <code><a href='https://rdrr.io/r/base/ifelse.html'>ifelse()</a></code> or similar, where we can
+allow the condition on the same line as the function name, and we don't
+impose rules on the line breaks for the subsequent arguments. Governed
+by <code>except_text_before</code>.</p></li>
+<li><p>Some calls like <code><a href='https://rdrr.io/r/base/switch.html'>switch()</a></code> statements are always forced to become multi-
+line. Governed by <code>force_text_before</code>.</p></li>
 </ul>
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

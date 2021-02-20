@@ -183,7 +183,7 @@
 <a href="#api-changes" class="anchor"></a>API Changes</h2>
 <ul>
 <li><p><code><a href="../reference/style_file.html">style_file()</a></code> and friends gain argument <code>dry</code> to control if changes should be applied to files or not (<a href='https://github.com/r-lib/styler/issues/634'>#634</a>).</p></li>
-<li><p><code><a href="../reference/style_file.html">style_file()</a></code> and friends gain argument <code>base_indention</code> (defaulting to 0) to control by how much the output code is indented (<a href='https://github.com/r-lib/styler/issues/649'>#649</a>, <a href='https://github.com/r-lib/styler/issues/692'>#692</a>).</p></li>
+<li><p><code><a href="../reference/style_file.html">style_file()</a></code> and friends gain argument <code>base_indention</code> (defaulting to 0) to control by how much the output code is indented (<a href='https://github.com/r-lib/styler/issues/649'>#649</a>, <a href='https://github.com/r-lib/styler/issues/692'>#692</a>). The Addin for styling a selection picks that up, e.g. you can style a function body and indention is preserved (<a href='https://github.com/r-lib/styler/issues/725'>#725</a>).</p></li>
 <li><p>added an option (<code>styler.test_dir_writeable</code>) that changes test behavior to not directly modify test files in the current directory (<a href='https://github.com/r-lib/styler/issues/548'>#548</a>).</p></li>
 <li><p>added an option for disabling all communication when using the package (<code>styler.quiet</code>) (<a href='https://github.com/r-lib/styler/issues/640'>#640</a>).</p></li>
 <li><p><code>scope</code> in <code><a href="../reference/tidyverse_style.html">tidyverse_style()</a></code> can now be specified with higher granularity through <code><a href="https://rdrr.io/r/base/AsIs.html">I()</a></code>, e.g. <code><a href="https://rdrr.io/r/base/AsIs.html">I(c('spaces', 'tokens'))</a></code> allows us to style spaces and tokens without styling line breaks and indention. Previously, only a string was allowed and all less invasive scopes were included, e.g. if you wanted to style tokens, you had to always also style spaces, indention, line breaks as well (<a href='https://github.com/r-lib/styler/issues/705'>#705</a>, <a href='https://github.com/r-lib/styler/issues/707'>#707</a>).</p></li>
@@ -194,8 +194,9 @@
 <h2 class="hasAnchor">
 <a href="#major-changes" class="anchor"></a>Major changes</h2>
 <ul>
-<li>The environment variable <code>save_after_styling</code> is deprecated in favor of the R option <code>styler.save_after_styling</code> to control if a file is saved after styling with the RStudio Addin. Note than in RStudio &gt;= 1.3.0, you can auto-save edits in general (Code -&gt; Saving -&gt; Auto-Save), e.g. on idle editor or focus loss, so this feature becomes less relevant. (<a href='https://github.com/r-lib/styler/issues/631'>#631</a>).</li>
-<li>blank lines in function calls and headers are now removed, for the former only when there are no comments before or after the blank line (<a href='https://github.com/r-lib/styler/issues/629'>#629</a>, <a href='https://github.com/r-lib/styler/issues/630'>#630</a>, <a href='https://github.com/r-lib/styler/issues/635'>#635</a>).</li>
+<li>The environment variable <code>save_after_styling</code> is deprecated in favor of the R option <code>styler.save_after_styling</code> to control if a file is saved after styling with the RStudio Addin. Note than in RStudio &gt;= 1.3.0, you can auto-save edits in general (Code -&gt; Saving -&gt; Auto-Save), e.g. on idle editor or focus loss, so this feature becomes less relevant (<a href='https://github.com/r-lib/styler/issues/631'>#631</a>, <a href='https://github.com/r-lib/styler/issues/726'>#726</a>).</li>
+<li>blank lines in function calls and headers are now removed, for the former only when there are no comments before or after the blank line (<a href='https://github.com/r-lib/styler/issues/629'>#629</a>, <a href='https://github.com/r-lib/styler/issues/630'>#630</a>, <a href='https://github.com/r-lib/styler/issues/635'>#635</a>,
+<a href='https://github.com/r-lib/styler/issues/723'>#723</a>).</li>
 <li>speed improvements: ~10% when cache is activated because transformers are not captured as character anymore (<a href='https://github.com/r-lib/styler/issues/679'>#679</a>), ~3% in low-level optimization (<a href='https://github.com/r-lib/styler/issues/691'>#691</a>). 7% by requiring magrittr 2.0 (<a href='https://github.com/r-lib/styler/issues/681'>#681</a>), ~8% by dropping unused transformers (<a href='https://github.com/r-lib/styler/issues/711'>#711</a>) .</li>
 <li>
 <code>#&lt;&lt;</code> is now recognized as the xaringan marker and no space is added after<code>#</code> (<a href='https://github.com/r-lib/styler/issues/700'>#700</a>).</li>
@@ -207,6 +208,8 @@
 <ul>
 <li>
 <code><a href="../reference/style_dir.html">style_dir()</a></code> and <code><a href="../reference/style_pkg.html">style_pkg()</a></code> now apply directory exclusion recursively with <code>exclude_dirs</code> (<a href='https://github.com/r-lib/styler/issues/676'>#676</a>).</li>
+<li>
+<code><a href="https://rdrr.io/r/base/switch.html">switch()</a></code> now has line breaks after every argument to match the tidyverse style guide (<a href='https://github.com/r-lib/styler/issues/722'>#722</a>, <a href='https://github.com/r-lib/styler/issues/727'>#727</a>).</li>
 <li>unary <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code> before a function call does not give an error anymore, as before version 1.3.0 (<a href='https://github.com/r-lib/styler/issues/697'>#697</a>).</li>
 <li>cache is now correctly invalidated when style guide arguments change (<a href='https://github.com/r-lib/styler/issues/647'>#647</a>).</li>
 <li>empty lines are now removed between pipes and assignments (<a href='https://github.com/r-lib/styler/issues/645'>#645</a>, <a href='https://github.com/r-lib/styler/issues/710'>#710</a>).</li>
@@ -220,6 +223,7 @@
 <a href='https://github.com/r-lib/styler/issues/687'>#687</a>).</li>
 <li>The internal <code><a href="../reference/create_tree.html">create_tree()</a></code> only used in testing of styler now works when the cache is activated (<a href='https://github.com/r-lib/styler/issues/688'>#688</a>).</li>
 <li>simplification of internals (<a href='https://github.com/r-lib/styler/issues/692'>#692</a>).</li>
+<li>include <code>test-*</code> files in styling pre-commit hook (<a href='https://github.com/r-lib/styler/issues/724'>#724</a>).</li>
 </ul>
 </div>
 <div id="infrastructure-changes" class="section level2">
@@ -321,6 +325,7 @@ style_text("1 # comment")
 <h2 class="hasAnchor">
 <a href="#minor-improvements-and-fixes" class="anchor"></a>Minor improvements and fixes</h2>
 <ul>
+<li><p>Roxygen code examples: leverage <code>roxygen2</code> for correct escaping of expressions that contain <code>\</code>, in particular in <code>dontrun{}</code> and friends, allow quoted braces that are not matched (<a href='https://github.com/r-lib/styler/issues/729'>#729</a>).</p></li>
 <li><p>Brace expressions in function calls are formatted in a less compact way to improve readability. Typical use case: <code><a href="https://rdrr.io/r/base/conditions.html">tryCatch()</a></code> (<a href='https://github.com/r-lib/styler/issues/543'>#543</a>).</p></li>
 <li><p>Arguments in function declarations in a context which is indented multiple times should now be correct. This typically affects <code><a href="https://r6.r-lib.org/reference/R6Class.html">R6::R6Class()</a></code> (<a href='https://github.com/r-lib/styler/issues/546'>#546</a>).</p></li>
 <li><p>Escape characters in roxygen code examples are now correctly escaped (<a href='https://github.com/r-lib/styler/issues/512'>#512</a>).</p></li>
