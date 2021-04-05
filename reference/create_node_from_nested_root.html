@@ -10,35 +10,44 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script>
 
 
+<!-- docsearch -->
+<script src="../docsearch.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+
 
 
 <meta property="og:title" content="Convert a nested tibble into a node tree — create_node_from_nested_root" />
 <meta property="og:description" content="This function is convenient to display all nesting levels of a nested tibble
 at once." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -56,7 +65,7 @@ at once." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -70,7 +79,7 @@ at once." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">styler</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.4.1</span>
       </span>
     </div>
 
@@ -78,9 +87,12 @@ at once." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
+</li>
+<li>
+  <a href="../articles/styler.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -93,37 +105,65 @@ at once." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/customizing_styler.html">Customizing styler</a>
-    </li>
-    <li>
       <a href="../articles/detect-alignment.html">Alignment detection</a>
     </li>
     <li>
-      <a href="../articles/gsoc_proposal/data_structures.html">Data Structures</a>
+      <a href="../articles/strict.html">The effect of `strict = FALSE`</a>
     </li>
     <li>
-      <a href="../articles/gsoc_proposal/manipulating_nested_parse_data.html">Manipulating the nested parse table</a>
+      <a href="../articles/third-party-integrations.html">Third-party integrations</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Developers</li>
+    <li>
+      <a href="../articles/caching.html">Caching</a>
     </li>
     <li>
-      <a href="../articles/introducing_styler.html">An introduction to styler</a>
-    </li>
-    <li>
-      <a href="../articles/performance_improvements.html">Performance Improvements</a>
+      <a href="../articles/customizing_styler.html">Customizing styler</a>
     </li>
   </ul>
 </li>
-<li>
-  <a href="../news/index.html">Changelog</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    News
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Releases</li>
+    <li>
+      <a href="https://www.tidyverse.org/blog/2017/12/styler-1.0.0/">Version 1.0.0</a>
+    </li>
+    <li>
+      <a href="https://www.tidyverse.org/blog/2019/11/styler-1-2-0/">Version 1.2.0</a>
+    </li>
+    <li>
+      <a href="https://lorenzwalthert.netlify.com/post/styler-1-3-0/">Version 1.3.0</a>
+    </li>
+    <li>
+      <a href="https://lorenzwalthert.netlify.app/post/styler-1-4-0/">Version 1.4.0</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="../news/index.html">Changelog</a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/r-lib/styler">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/r-lib/styler/">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
       </ul>
+      
+      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
       
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -146,7 +186,7 @@ at once." />
 at once.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>create_node_from_nested_root</span>(<span class='no'>pd_nested</span>, <span class='no'>structure_only</span>)</pre>
+    <pre class="usage"><span class='fu'>create_node_from_nested_root</span><span class='op'>(</span><span class='va'>pd_nested</span>, <span class='va'>structure_only</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,59 +208,61 @@ to check whether two structures are identical.</p></td>
     <p>An object of class "Node" and "R6".</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='kw pkg'>rlang</span><span class='kw ns'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/is_installed.html'>is_installed</a></span>(<span class='st'>"data.tree"</span>)) {
-  <span class='no'>code</span> <span class='kw'>&lt;-</span> <span class='st'>"a &lt;- function(x) { if(x &gt; 1) { 1+1 } else {x} }"</span>
-  <span class='no'>nested_pd</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>styler</span><span class='kw ns'>:::</span><span class='fu'><a href='https://rdrr.io/pkg/styler/man/compute_parse_data_nested.html'>compute_parse_data_nested</a></span>(<span class='no'>code</span>)
-  <span class='no'>initialized</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>styler</span><span class='kw ns'>:::</span><span class='fu'><a href='https://rdrr.io/pkg/styler/man/visit.html'>pre_visit</a></span>(<span class='no'>nested_pd</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>default_style_guide_attributes</span>))
-  <span class='kw pkg'>styler</span><span class='kw ns'>:::</span><span class='fu'><a href='https://rdrr.io/pkg/styler/man/create_node_from_nested_root.html'>create_node_from_nested_root</a></span>(<span class='no'>initialized</span>, <span class='kw'>structure_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-}</div><div class='output co'>#&gt;                                                  levelName
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/is_installed.html'>is_installed</a></span><span class='op'>(</span><span class='st'>"data.tree"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='fu'>withr</span><span class='fu'>::</span><span class='fu'><a href='https://withr.r-lib.org/reference/with_options.html'>with_options</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>styler.cache_name <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>, <span class='co'># temporarily deactivate cache</span>
+    <span class='op'>{</span>
+      <span class='va'>code</span> <span class='op'>&lt;-</span> <span class='st'>"a &lt;- function(x) { if(x &gt; 1) { 1+1 } else {x} }"</span>
+      <span class='va'>nested_pd</span> <span class='op'>&lt;-</span> <span class='fu'>styler</span><span class='fu'>:::</span><span class='fu'><a href='compute_parse_data_nested.html'>compute_parse_data_nested</a></span><span class='op'>(</span><span class='va'>code</span><span class='op'>)</span>
+      <span class='va'>initialized</span> <span class='op'>&lt;-</span> <span class='fu'>styler</span><span class='fu'>:::</span><span class='fu'><a href='visit.html'>pre_visit</a></span><span class='op'>(</span><span class='va'>nested_pd</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>default_style_guide_attributes</span><span class='op'>)</span><span class='op'>)</span>
+      <span class='fu'>styler</span><span class='fu'>:::</span><span class='fu'>create_node_from_nested_root</span><span class='op'>(</span><span class='va'>initialized</span>, structure_only <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+    <span class='op'>}</span>
+  <span class='op'>)</span>
+<span class='op'>}</span>
+</div><div class='output co'>#&gt;                                                  levelName
 #&gt; 1  ROOT (token: short_text [lag_newlines/spaces] {pos_id})
-#&gt; 2   °--expr:  [0/0] {1}                                   
-#&gt; 3       ¦--expr:  [0/1] {3}                               
+#&gt; 2   °--expr: a &lt;-  [0/0] {1}                              
+#&gt; 3       ¦--expr: a [0/1] {3}                              
 #&gt; 4       ¦   °--SYMBOL: a [0/0] {2}                        
 #&gt; 5       ¦--LEFT_ASSIGN: &lt;- [0/1] {4}                      
-#&gt; 6       °--expr:  [0/0] {5}                               
+#&gt; 6       °--expr: funct [0/0] {5}                          
 #&gt; 7           ¦--FUNCTION: funct [0/0] {6}                  
 #&gt; 8           ¦--'(': ( [0/0] {7}                           
 #&gt; 9           ¦--SYMBOL_FORMALS: x [0/0] {8}                
 #&gt; 10          ¦--')': ) [0/1] {9}                           
-#&gt; 11          °--expr:  [0/0] {10}                          
+#&gt; 11          °--expr: { if( [0/0] {10}                     
 #&gt; 12              ¦--'{': { [0/1] {11}                      
-#&gt; 13              ¦--expr:  [0/1] {12}                      
+#&gt; 13              ¦--expr: if(x  [0/1] {12}                 
 #&gt; 14              ¦   ¦--IF: if [0/0] {13}                  
 #&gt; 15              ¦   ¦--'(': ( [0/0] {14}                  
-#&gt; 16              ¦   ¦--expr:  [0/0] {15}                  
-#&gt; 17              ¦   ¦   ¦--expr:  [0/1] {17}              
+#&gt; 16              ¦   ¦--expr: x &gt; 1 [0/0] {15}             
+#&gt; 17              ¦   ¦   ¦--expr: x [0/1] {17}             
 #&gt; 18              ¦   ¦   ¦   °--SYMBOL: x [0/0] {16}       
 #&gt; 19              ¦   ¦   ¦--GT: &gt; [0/1] {18}               
-#&gt; 20              ¦   ¦   °--expr:  [0/0] {20}              
+#&gt; 20              ¦   ¦   °--expr: 1 [0/0] {20}             
 #&gt; 21              ¦   ¦       °--NUM_CONST: 1 [0/0] {19}    
 #&gt; 22              ¦   ¦--')': ) [0/1] {21}                  
-#&gt; 23              ¦   ¦--expr:  [0/1] {22}                  
+#&gt; 23              ¦   ¦--expr: { 1+1 [0/1] {22}             
 #&gt; 24              ¦   ¦   ¦--'{': { [0/1] {23}              
-#&gt; 25              ¦   ¦   ¦--expr:  [0/1] {24}              
-#&gt; 26              ¦   ¦   ¦   ¦--expr:  [0/0] {26}          
+#&gt; 25              ¦   ¦   ¦--expr: 1+1 [0/1] {24}           
+#&gt; 26              ¦   ¦   ¦   ¦--expr: 1 [0/0] {26}         
 #&gt; 27              ¦   ¦   ¦   ¦   °--NUM_CONST: 1 [0/0] {25}
 #&gt; 28              ¦   ¦   ¦   ¦--'+': + [0/0] {27}          
-#&gt; 29              ¦   ¦   ¦   °--expr:  [0/0] {29}          
+#&gt; 29              ¦   ¦   ¦   °--expr: 1 [0/0] {29}         
 #&gt; 30              ¦   ¦   ¦       °--NUM_CONST: 1 [0/0] {28}
 #&gt; 31              ¦   ¦   °--'}': } [0/0] {30}              
 #&gt; 32              ¦   ¦--ELSE: else [0/1] {31}              
-#&gt; 33              ¦   °--expr:  [0/0] {32}                  
+#&gt; 33              ¦   °--expr: {x} [0/0] {32}               
 #&gt; 34              ¦       ¦--'{': { [0/0] {33}              
-#&gt; 35              ¦       ¦--expr:  [0/0] {35}              
+#&gt; 35              ¦       ¦--expr: x [0/0] {35}             
 #&gt; 36              ¦       ¦   °--SYMBOL: x [0/0] {34}       
 #&gt; 37              ¦       °--'}': } [0/0] {36}              
 #&gt; 38              °--'}': } [0/0] {37}                      </div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -231,13 +273,30 @@ to check whether two structures are identical.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
    </div>
 
   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: '13580d327d8a7159f83a7cff178d2141',
+    indexName: 'r-lib_styler',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
 
   </body>
